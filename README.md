@@ -1,73 +1,51 @@
-# React + TypeScript + Vite
+# Quick Fill Browser Extension
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
 
-Currently, two official plugins are available:
+Quick Fill is a browser extension designed to streamline the process of filling out online forms. It allows users to store frequently used personal information (such as name, surname, email) and social media links (like GitHub, LinkedIn, etc.), and quickly insert them into form fields with customizable keyboard shortcuts or via a convenient popup sheet.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## React Compiler
+- **Store Multiple Variants:** Save different sets of default values for common form fields (e.g., multiple emails, names, or social links).
+- **Starred Links:** Mark important or frequently used links for quick access.
+- **Customizable Shortcuts:** Assign keyboard shortcuts (e.g., Ctrl+Alt+1, Ctrl+Alt+2) to instantly fill in specific information or links.
+- **Popup Sheet:** Open a popup or sheet to view and select from your saved information, making it easy to fill forms with a single click.
+- **Easy Management:** Add, edit, or remove stored information and shortcuts from the extension’s settings.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Use Cases
 
-## Expanding the ESLint configuration
+- Quickly fill out registration or login forms with your personal details.
+- Instantly insert your social media profiles into job applications or networking sites.
+- Switch between different profiles or information sets depending on the context.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Planned Functionality
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- Support for both keyboard shortcuts and manual selection from a popup.
+- Option to customize which fields and links are available and their order.
+- Ability to export/import your saved data for backup or migration.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Getting Started
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+This project is built with React, TypeScript, and Vite. To run the extension locally:
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+1. Install dependencies:
+   ```sh
+   npm install
+   ```
+2. Start the development server:
+   ```sh
+   npm run dev
+   ```
+3. Build the extension for production:
+   ```sh
+   npm run build
+   ```
+4. Load the extension into your browser (see your browser’s documentation for loading unpacked extensions).
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Contributing
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Contributions are welcome! Please open an issue or submit a pull request for suggestions or improvements.
+
+## License
+
+This project is licensed under the MIT License.
