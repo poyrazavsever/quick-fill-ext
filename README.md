@@ -1,112 +1,165 @@
-# Quick Fill Browser Extension
+<div align="center">
+  <img src="public/logo.png" alt="Shortcut Injector Logo" width="120" />
+  <h1>Shortcut Injector</h1>
+  <p>Form doldurma sürecini hızlandıran, alias ve kısayol tabanlı tarayıcı eklentisi.</p>
+</div>
 
-Quick Fill is a minimal browser extension for repetitive form filling.
-You can store common values (full name, email, GitHub, LinkedIn, etc.), assign shortcuts, and inject values into the currently focused field.
+## İçindekiler
 
-## Core Features
+- [Proje Özeti](#proje-ozeti)
+- [Özellikler](#ozellikler)
+- [Kullanım Akışı](#kullanim-akisi)
+- [Arayüzler](#arayuzler)
+- [Renk Paleti](#renk-paleti)
+- [Teknik Mimari](#teknik-mimari)
+- [Kurulum ve Çalıştırma](#kurulum-ve-calistirma)
+- [Tarayıcıya Yükleme](#tarayiciya-yukleme)
+- [İzinler](#izinler)
+- [Kısıtlar](#kisitlar)
+- [Yol Haritası](#yol-haritasi)
+- [Lisans](#lisans)
 
-- Multiple profiles (variants) for different contexts
-- Field and link items in each profile
-- Starred items for faster access
-- Custom shortcut per item (example: `ctrl+alt+1`)
-- Keyword alias + `Tab` auto-complete (example: `linkedin` + `Tab`)
-- One-click insert from popup
-- Separate settings page for adding extra fields
-- Persistent sync storage via `chrome.storage.sync`
+## Proje Özeti
 
-## Current Architecture
+`Shortcut Injector`, sık kullanılan form değerlerini (isim, e-posta, sosyal bağlantılar vb.) tek tuş kombinasyonu veya anahtar kelime tabanlı tamamlama ile anında alana yazdırır.
 
-- `popup` (`src/App.tsx`): minimal quick-insert UI
-- `options` (`src/options/OptionsApp.tsx`): detailed profile/item management page
-- `content script` (`src/content.ts`): shortcut listening + insertion into focused element
-- `storage layer` (`src/lib/storage.ts`): data read/write/normalize
-- `shortcut utils` (`src/lib/shortcuts.ts`): normalize and match keyboard combos
+Amaç:
 
-## UI
+- Tekrarlayan form doldurma işini hızlandırmak
+- Aynı verileri kopyala-yapıştır yapmadan kullanabilmek
+- Farklı kullanım senaryoları için birden fazla profil yönetebilmek
 
-Custom, minimal CSS is used. No external UI component library.
+## Özellikler
 
-## Default Data
+- Çoklu profil desteği (farklı varyantlar için)
+- Her profil için `field` veya `link` tipinde item tanımlama
+- Item başına özelleştirilebilir kısayol (ör. `ctrl+alt+1`)
+- Item başına alias tanımlama (ör. `linkedin`)
+- `alias + Tab` ile otomatik tamamlama
+- Popup üzerinden tek tıkla değer enjekte etme
+- Gelişmiş yönetim için ayrı ayarlar sayfası (`options`)
+- Verilerin `chrome.storage.sync` ile kalıcı tutulması
+- Chrome + Firefox (MV3) uyumluluğu
 
-On first run, one profile is created with:
+## Kullanım Akışı
 
-- `Full Name` -> `ctrl+alt+1`
-- `Email` -> `ctrl+alt+2`
-- `GitHub` -> `ctrl+alt+3`
-- `LinkedIn` -> `ctrl+alt+4`
+### 1) Kısayol ile Enjekte Etme
 
-## How It Works
+1. Web sayfasında bir `input`, `textarea` veya `contenteditable` alanına odaklan.
+2. Tanımlı kısayola bas (ör. `ctrl+alt+1`).
+3. Eşleşen item değeri imleç konumuna yazılır.
 
-1. Focus an editable area on any webpage (`input`, `textarea`, `contenteditable`).
-2. Trigger a configured shortcut (for example `ctrl+alt+1`).
-3. Matching item value is inserted at cursor position.
+### 2) Alias + Tab Otomatik Tamamlama
 
-Alias method:
+1. Alana item alias değerini yaz (ör. `linkedin`).
+2. `Tab` tuşuna bas.
+3. Alias, kayıtlı gerçek değer ile değiştirilir.
 
-1. Type an item alias (for example `linkedin`) into a field.
-2. Press `Tab`.
-3. Alias is replaced with the saved value.
+### 3) Popup ile Tek Tık Enjekte Etme
 
-Alternative:
+1. Eklenti popup'unu aç.
+2. Aktif profili seç.
+3. Listeden bir item'a tıkla.
+4. Değer aktif sekmedeki odaklı alana yazılır.
 
-1. Open extension popup.
-2. Click a saved item to insert directly.
-3. Use `Ekstra Alanlar` button to open the full settings page.
+## Arayüzler
 
-## Shortcut Format
+### Popup
 
-- Supported modifiers: `ctrl`, `alt`, `shift`, `meta`
-- Example formats:
-  - `ctrl+alt+1`
-  - `ctrl+shift+g`
-  - `alt+enter`
+Hızlı kullanım odaklı, sade ekran:
 
-## Local Development
+- Profil seçimi
+- Kayıtlı item listesi
+- Tek tık enjekte etme
+- `Ekstra Alanlar` butonuyla ayarlar sayfasına geçiş
 
-1. Install dependencies:
-   ```bash
-   npm install
-   ```
-2. Start dev mode:
-   ```bash
-   npm run dev
-   ```
-3. Build production:
-   ```bash
-   npm run build
-   ```
-4. Load extension as unpacked (use your browser extension page).
+### Ayarlar (Options)
 
-Firefox:
+Detaylı yönetim ekranı:
 
-1. Build project: `npm run build`
-2. Open `about:debugging#/runtime/this-firefox`
-3. Click `Load Temporary Add-on...`
-4. Select `dist/manifest.json`
+- Profil ekleme/silme/yeniden adlandırma
+- Item ekleme/silme
+- `label`, `alias`, `value`, `type`, `shortcut`, `star` düzenleme
 
-## Permissions Used
+## Renk Paleti
 
-- `storage`: save profiles/items/shortcuts
-- `tabs`: send insert message from popup to active tab
-- `host_permissions: <all_urls>`: run content script on pages for shortcut handling
+| Rol | Değer |
+| --- | --- |
+| Primary | `#27b0c1` |
+| Secondary | `#40396e` |
+| White | `#f2f2f2` |
 
-## Browser Support
+## Teknik Mimari
 
-- Chrome (MV3)
-- Firefox (MV3, temporary load for local development)
+```text
+src/
+  App.tsx                  -> Popup UI
+  options-main.tsx         -> Options giriş dosyası
+  options/OptionsApp.tsx   -> Options UI
+  content.ts               -> Kısayol ve alias tamamlama motoru
+  lib/
+    ext-api.ts             -> Browser/Chrome uyum katmanı
+    storage.ts             -> Kalıcılık (sync storage)
+    shortcuts.ts           -> Kısayol normalize / çözümleme
+    defaults.ts            -> Varsayılan profil + item verisi
+    types.ts               -> Tip tanımları
+```
 
-## Notes / Limitations
+## Kurulum ve Çalıştırma
 
-- Content scripts are not allowed on some special pages (for example `chrome://` pages).
-- Shortcuts are interpreted inside page context; avoid using very generic single-key shortcuts.
+```bash
+npm install
+npm run dev
+```
 
-## Next Steps (Planned)
+Build almak için:
 
-- Import/export profile data
-- Reorder items with drag-and-drop
-- Better shortcut conflict detection
-- Optional site-specific profiles
+```bash
+npm run build
+```
 
-## License
+Kalite kontrol:
+
+```bash
+npm run lint
+```
+
+## Tarayıcıya Yükleme
+
+### Chrome (MV3)
+
+1. `npm run build`
+2. Chrome'da `chrome://extensions` aç
+3. `Developer mode` aç
+4. `Load unpacked` seç
+5. `dist` klasörünü göster
+
+### Firefox (MV3)
+
+1. `npm run build`
+2. `about:debugging#/runtime/this-firefox` sayfasını aç
+3. `Load Temporary Add-on...` seç
+4. `dist/manifest.json` dosyasını seç
+
+## İzinler
+
+- `storage`: profil, item, alias ve kısayol verilerini saklamak
+- `tabs`: popup üzerinden aktif sekmeye mesaj göndermek
+- `host_permissions: <all_urls>`: içerik script'inin sayfalarda çalışabilmesi
+
+## Kısıtlar
+
+- `chrome://` benzeri özel sayfalarda içerik script'i çalışmaz.
+- Alias tamamlama `Tab` tuşuna bağlıdır ve odaklı düzenlenebilir alan gerektirir.
+- Çok genel kısayollar çakışma yaratabilir; kombinasyonları dikkatli seçmek gerekir.
+
+## Yol Haritası
+
+- JSON import/export
+- Item sıralama (drag-and-drop)
+- Kısayol çakışma uyarıları
+- Site bazlı profil seçimi
+
+## Lisans
 
 MIT

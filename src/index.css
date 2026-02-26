@@ -1,9 +1,12 @@
 :root {
+  --color-primary: #27b0c1;
+  --color-secondary: #40396e;
+  --color-white: #f2f2f2;
   font-family: "Segoe UI", Arial, sans-serif;
   line-height: 1.4;
   font-weight: 400;
-  color: #1f2937;
-  background: #f8fafc;
+  color: var(--color-secondary);
+  background: var(--color-white);
   color-scheme: light;
 }
 
@@ -13,7 +16,7 @@
 
 body {
   margin: 0;
-  background: #f8fafc;
+  background: var(--color-white);
 }
 
 .popup-shell {
@@ -29,16 +32,29 @@ body {
 }
 
 .panel {
-  border: 1px solid #d1d5db;
+  border: 1px solid color-mix(in srgb, var(--color-secondary) 24%, transparent);
   border-radius: 8px;
-  background: #ffffff;
+  background: var(--color-white);
   padding: 14px;
+}
+
+.brand-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-logo {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
 }
 
 .title {
   margin: 0;
   font-size: 18px;
   font-weight: 600;
+  color: var(--color-secondary);
 }
 
 .subtitle {
@@ -49,7 +65,7 @@ body {
 
 .muted {
   margin: 8px 0 0;
-  color: #6b7280;
+  color: color-mix(in srgb, var(--color-secondary) 66%, white);
   font-size: 13px;
 }
 
@@ -58,22 +74,23 @@ body {
   margin-top: 12px;
   margin-bottom: 6px;
   font-size: 12px;
-  color: #374151;
+  color: color-mix(in srgb, var(--color-secondary) 85%, white);
 }
 
 .input {
   width: 100%;
   height: 34px;
-  border: 1px solid #cbd5e1;
+  border: 1px solid color-mix(in srgb, var(--color-secondary) 30%, transparent);
   border-radius: 6px;
   padding: 6px 10px;
   font-size: 13px;
-  background: #fff;
+  background: #ffffff;
+  color: var(--color-secondary);
 }
 
 .input:focus {
-  outline: 2px solid #93c5fd;
-  border-color: #60a5fa;
+  outline: 2px solid color-mix(in srgb, var(--color-primary) 40%, white);
+  border-color: var(--color-primary);
 }
 
 .row {
@@ -92,32 +109,54 @@ body {
 }
 
 .btn {
-  border: 1px solid #9ca3af;
+  border: 1px solid color-mix(in srgb, var(--color-secondary) 50%, transparent);
   background: #ffffff;
-  color: #111827;
+  color: var(--color-secondary);
   border-radius: 6px;
   height: 32px;
   padding: 0 10px;
   font-size: 12px;
+  font-weight: 600;
   cursor: pointer;
+  transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease;
 }
 
-.btn:hover {
-  background: #f3f4f6;
+.btn:not(.btn-secondary):not(.btn-danger):hover {
+  background: color-mix(in srgb, var(--color-primary) 10%, white);
 }
 
 .btn-secondary {
-  border-color: #94a3b8;
+  border-color: var(--color-primary);
+  background: color-mix(in srgb, var(--color-primary) 22%, white);
+  color: var(--color-secondary);
+}
+
+.btn-secondary:hover {
+  border-color: color-mix(in srgb, var(--color-primary) 72%, var(--color-secondary));
+  background: color-mix(in srgb, var(--color-primary) 36%, white);
+  color: var(--color-secondary);
 }
 
 .btn-danger {
-  border-color: #ef4444;
-  color: #dc2626;
+  border-color: var(--color-secondary);
+  background: var(--color-secondary);
+  color: var(--color-white);
+}
+
+.btn-danger:hover {
+  border-color: color-mix(in srgb, var(--color-secondary) 84%, black);
+  background: color-mix(in srgb, var(--color-secondary) 84%, black);
+  color: var(--color-white);
+}
+
+.btn:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--color-primary) 52%, white);
+  outline-offset: 1px;
 }
 
 .divider {
   border: 0;
-  border-top: 1px solid #e5e7eb;
+  border-top: 1px solid color-mix(in srgb, var(--color-secondary) 24%, transparent);
   margin: 14px 0;
 }
 
@@ -132,7 +171,7 @@ body {
 
 .item-button {
   width: 100%;
-  border: 1px solid #d1d5db;
+  border: 1px solid color-mix(in srgb, var(--color-secondary) 24%, transparent);
   background: #fff;
   border-radius: 6px;
   text-align: left;
@@ -146,18 +185,18 @@ body {
 }
 
 .item-button:hover {
-  background: #f9fafb;
+  background: color-mix(in srgb, var(--color-primary) 10%, white);
 }
 
 .shortcut {
-  color: #6b7280;
+  color: color-mix(in srgb, var(--color-secondary) 66%, white);
   font-size: 11px;
 }
 
 .status {
   margin: 12px 0 0;
   font-size: 12px;
-  color: #4b5563;
+  color: color-mix(in srgb, var(--color-secondary) 76%, white);
   min-height: 18px;
 }
 
@@ -178,7 +217,7 @@ body {
 }
 
 .item-card {
-  border: 1px solid #d1d5db;
+  border: 1px solid color-mix(in srgb, var(--color-secondary) 24%, transparent);
   border-radius: 8px;
   padding: 10px;
 }
@@ -188,16 +227,17 @@ body {
   align-items: center;
   height: 22px;
   padding: 0 8px;
-  border: 1px solid #cbd5e1;
+  border: 1px solid color-mix(in srgb, var(--color-primary) 50%, transparent);
   border-radius: 99px;
   font-size: 11px;
-  color: #334155;
+  color: var(--color-secondary);
+  background: color-mix(in srgb, var(--color-primary) 14%, white);
 }
 
 .checkbox-row {
   margin-top: 0;
   font-size: 12px;
-  color: #334155;
+  color: var(--color-secondary);
 }
 
 @media (max-width: 760px) {

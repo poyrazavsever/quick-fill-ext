@@ -182,7 +182,10 @@ function OptionsApp() {
     return (
       <main className="options-shell">
         <section className="panel">
-          <h1 className="title">Quick Fill Ayarlar</h1>
+          <div className="brand-row">
+            <img className="brand-logo" src="/logo.png" alt="Shortcut Injector" />
+            <h1 className="title">Shortcut Injector Ayarlar</h1>
+          </div>
           <p className="muted">Yükleniyor...</p>
         </section>
       </main>
@@ -192,7 +195,10 @@ function OptionsApp() {
   return (
     <main className="options-shell">
       <section className="panel">
-        <h1 className="title">Quick Fill Ayarlar</h1>
+        <div className="brand-row">
+          <img className="brand-logo" src="/logo.png" alt="Shortcut Injector" />
+          <h1 className="title">Shortcut Injector Ayarlar</h1>
+        </div>
         <p className="muted">Ekstra alanlar, profiller ve kısayollar burada yönetilir.</p>
 
         <div className="grid two-columns">

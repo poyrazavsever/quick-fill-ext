@@ -1,13 +1,23 @@
 {
   "manifest_version": 3,
-  "name": "Quick Fill Extension",
+  "name": "Shortcut Injector",
   "version": "1.0.0",
-  "description": "A Chrome extension to quickly fill forms with predefined data.",
+  "description": "Inject saved values into form fields with shortcuts and aliases.",
+  "icons": {
+    "16": "logo.png",
+    "32": "logo.png",
+    "48": "logo.png",
+    "128": "logo.png"
+  },
   "permissions": ["storage", "tabs"],
   "host_permissions": ["<all_urls>"],
   "action": {
     "default_popup": "index.html",
-    "default_title": "Quick Fill"
+    "default_title": "Shortcut Injector",
+    "default_icon": {
+      "16": "logo.png",
+      "32": "logo.png"
+    }
   },
   "options_ui": {
     "page": "options.html",
@@ -15,7 +25,7 @@
   },
   "browser_specific_settings": {
     "gecko": {
-      "id": "quick-fill-ext@local.dev"
+      "id": "shortcut-injector@local.dev"
     }
   },
   "content_scripts": [

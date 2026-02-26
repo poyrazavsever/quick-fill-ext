@@ -123,7 +123,10 @@ function App() {
     return (
       <main className="popup-shell">
         <section className="panel">
-          <h1 className="title">Quick Fill</h1>
+          <div className="brand-row">
+            <img className="brand-logo" src="/logo.png" alt="Shortcut Injector" />
+            <h1 className="title">Shortcut Injector</h1>
+          </div>
           <p className="muted">Loading...</p>
         </section>
       </main>
@@ -134,7 +137,10 @@ function App() {
     <main className="popup-shell">
       <section className="panel">
         <div className="row-between">
-          <h1 className="title">Quick Fill</h1>
+          <div className="brand-row">
+            <img className="brand-logo" src="/logo.png" alt="Shortcut Injector" />
+            <h1 className="title">Shortcut Injector</h1>
+          </div>
           <button className="btn btn-secondary" onClick={() => void openSettingsPage()}>
             Ekstra Alanlar
           </button>
