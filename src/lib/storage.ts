@@ -1,4 +1,5 @@
 import { createDefaultState } from "./defaults";
+import extApi from "./ext-api";
 import { makeId } from "./id";
 import type { QuickFillState, QuickItem, QuickProfile } from "./types";
 
@@ -94,7 +95,7 @@ export function getActiveProfile(state: QuickFillState): QuickProfile {
 }
 
 export async function readState(): Promise<QuickFillState> {
-  const result = await chrome.storage.sync.get(STORAGE_KEY);
+  const result = await extApi.storage.sync.get(STORAGE_KEY);
   const normalized = normalizeState(result[STORAGE_KEY]);
 
   if (!normalized) {
@@ -107,7 +108,7 @@ export async function readState(): Promise<QuickFillState> {
 }
 
 export async function writeState(state: QuickFillState): Promise<void> {
-  await chrome.storage.sync.set({ [STORAGE_KEY]: state });
+  await extApi.storage.sync.set({ [STORAGE_KEY]: state });
 }
 
 export function subscribeState(
@@ -134,6 +135,6 @@ export function subscribeState(
     onChange(normalized);
   };
 
-  chrome.storage.onChanged.addListener(listener);
-  return () => chrome.storage.onChanged.removeListener(listener);
+  extApi.storage.onChanged.addListener(listener);
+  return () => extApi.storage.onChanged.removeListener(listener);
 }

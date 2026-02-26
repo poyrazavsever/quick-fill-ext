@@ -77,11 +77,23 @@ Alternative:
    ```
 4. Load extension as unpacked (use your browser extension page).
 
+Firefox:
+
+1. Build project: `npm run build`
+2. Open `about:debugging#/runtime/this-firefox`
+3. Click `Load Temporary Add-on...`
+4. Select `dist/manifest.json`
+
 ## Permissions Used
 
 - `storage`: save profiles/items/shortcuts
 - `tabs`: send insert message from popup to active tab
 - `host_permissions: <all_urls>`: run content script on pages for shortcut handling
+
+## Browser Support
+
+- Chrome (MV3)
+- Firefox (MV3, temporary load for local development)
 
 ## Notes / Limitations
 

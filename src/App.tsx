@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import extApi from "./lib/ext-api";
 import { getActiveProfile, readState, subscribeState, writeState } from "./lib/storage";
 import type { QuickFillState } from "./lib/types";
 
@@ -78,7 +79,7 @@ function App() {
       return;
     }
 
-    const [activeTab] = await chrome.tabs.query({
+    const [activeTab] = await extApi.tabs.query({
       active: true,
       currentWindow: true,
     });
@@ -89,7 +90,7 @@ function App() {
     }
 
     try {
-      const response = await chrome.tabs.sendMessage(activeTab.id, {
+      const response = await extApi.tabs.sendMessage(activeTab.id, {
         type: "QUICK_FILL_INSERT",
         value,
       });
@@ -115,7 +116,7 @@ function App() {
   }, [activeProfile]);
 
   async function openSettingsPage(): Promise<void> {
-    await chrome.runtime.openOptionsPage();
+    await extApi.runtime.openOptionsPage();
   }
 
   if (!state || !activeProfile) {

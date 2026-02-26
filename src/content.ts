@@ -1,4 +1,5 @@
 import { eventToShortcut, normalizeShortcut } from "./lib/shortcuts";
+import extApi from "./lib/ext-api";
 import { getActiveProfile, readState, subscribeState } from "./lib/storage";
 import type { QuickFillState } from "./lib/types";
 
@@ -324,7 +325,7 @@ function isInsertMessage(message: unknown): message is QuickFillInsertMessage {
   );
 }
 
-chrome.runtime.onMessage.addListener((message: unknown, _sender, sendResponse) => {
+extApi.runtime.onMessage.addListener((message: unknown, _sender, sendResponse) => {
   if (!isInsertMessage(message)) {
     return;
   }

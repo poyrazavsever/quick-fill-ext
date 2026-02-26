@@ -9,7 +9,15 @@
     "default_popup": "index.html",
     "default_title": "Quick Fill"
   },
-  "options_page": "options.html",
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "quick-fill-ext@local.dev"
+    }
+  },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
