@@ -1,51 +1,100 @@
 # Quick Fill Browser Extension
 
-## Overview
+Quick Fill is a minimal browser extension for repetitive form filling.
+You can store common values (full name, email, GitHub, LinkedIn, etc.), assign shortcuts, and inject values into the currently focused field.
 
-Quick Fill is a browser extension designed to streamline the process of filling out online forms. It allows users to store frequently used personal information (such as name, surname, email) and social media links (like GitHub, LinkedIn, etc.), and quickly insert them into form fields with customizable keyboard shortcuts or via a convenient popup sheet.
+## Core Features
 
-## Features
+- Multiple profiles (variants) for different contexts
+- Field and link items in each profile
+- Starred items for faster access
+- Custom shortcut per item (example: `ctrl+alt+1`)
+- Keyword alias + `Tab` auto-complete (example: `linkedin` + `Tab`)
+- One-click insert from popup
+- Separate settings page for adding extra fields
+- Persistent sync storage via `chrome.storage.sync`
 
-- **Store Multiple Variants:** Save different sets of default values for common form fields (e.g., multiple emails, names, or social links).
-- **Starred Links:** Mark important or frequently used links for quick access.
-- **Customizable Shortcuts:** Assign keyboard shortcuts (e.g., Ctrl+Alt+1, Ctrl+Alt+2) to instantly fill in specific information or links.
-- **Popup Sheet:** Open a popup or sheet to view and select from your saved information, making it easy to fill forms with a single click.
-- **Easy Management:** Add, edit, or remove stored information and shortcuts from the extension’s settings.
+## Current Architecture
 
-## Use Cases
+- `popup` (`src/App.tsx`): minimal quick-insert UI
+- `options` (`src/options/OptionsApp.tsx`): detailed profile/item management page
+- `content script` (`src/content.ts`): shortcut listening + insertion into focused element
+- `storage layer` (`src/lib/storage.ts`): data read/write/normalize
+- `shortcut utils` (`src/lib/shortcuts.ts`): normalize and match keyboard combos
 
-- Quickly fill out registration or login forms with your personal details.
-- Instantly insert your social media profiles into job applications or networking sites.
-- Switch between different profiles or information sets depending on the context.
+## UI
 
-## Planned Functionality
+Custom, minimal CSS is used. No external UI component library.
 
-- Support for both keyboard shortcuts and manual selection from a popup.
-- Option to customize which fields and links are available and their order.
-- Ability to export/import your saved data for backup or migration.
+## Default Data
 
-## Getting Started
+On first run, one profile is created with:
 
-This project is built with React, TypeScript, and Vite. To run the extension locally:
+- `Full Name` -> `ctrl+alt+1`
+- `Email` -> `ctrl+alt+2`
+- `GitHub` -> `ctrl+alt+3`
+- `LinkedIn` -> `ctrl+alt+4`
+
+## How It Works
+
+1. Focus an editable area on any webpage (`input`, `textarea`, `contenteditable`).
+2. Trigger a configured shortcut (for example `ctrl+alt+1`).
+3. Matching item value is inserted at cursor position.
+
+Alias method:
+
+1. Type an item alias (for example `linkedin`) into a field.
+2. Press `Tab`.
+3. Alias is replaced with the saved value.
+
+Alternative:
+
+1. Open extension popup.
+2. Click a saved item to insert directly.
+3. Use `Ekstra Alanlar` button to open the full settings page.
+
+## Shortcut Format
+
+- Supported modifiers: `ctrl`, `alt`, `shift`, `meta`
+- Example formats:
+  - `ctrl+alt+1`
+  - `ctrl+shift+g`
+  - `alt+enter`
+
+## Local Development
 
 1. Install dependencies:
-   ```sh
+   ```bash
    npm install
    ```
-2. Start the development server:
-   ```sh
+2. Start dev mode:
+   ```bash
    npm run dev
    ```
-3. Build the extension for production:
-   ```sh
+3. Build production:
+   ```bash
    npm run build
    ```
-4. Load the extension into your browser (see your browser’s documentation for loading unpacked extensions).
+4. Load extension as unpacked (use your browser extension page).
 
-## Contributing
+## Permissions Used
 
-Contributions are welcome! Please open an issue or submit a pull request for suggestions or improvements.
+- `storage`: save profiles/items/shortcuts
+- `tabs`: send insert message from popup to active tab
+- `host_permissions: <all_urls>`: run content script on pages for shortcut handling
+
+## Notes / Limitations
+
+- Content scripts are not allowed on some special pages (for example `chrome://` pages).
+- Shortcuts are interpreted inside page context; avoid using very generic single-key shortcuts.
+
+## Next Steps (Planned)
+
+- Import/export profile data
+- Reorder items with drag-and-drop
+- Better shortcut conflict detection
+- Optional site-specific profiles
 
 ## License
 
-This project is licensed under the MIT License.
+MIT
