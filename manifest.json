@@ -1,0 +1,9 @@
+{
+  "manifest_version": 3,
+  "name": "Quick Fill Extension",
+  "version": "1.0.0",
+  "description": "A Chrome extension to quickly fill forms with predefined data.",
+  "action": {
+    "default_popup": "index.html"
+  }
+}
